@@ -1,0 +1,12 @@
+asgiref==3.7.2
+black==24.1.0
+Django==5.0.1
+django-filter==23.5
+djangorestframework==3.14.0
+pytz==2023.3.post1
+sqlparse==0.4.4
+typing_extensions==4.9.0
+mysqlclient==2.2.1
+djangorestframework-jsonapi==6.1.0
+pytest==7.4.4
+pytest-django==4.7.0

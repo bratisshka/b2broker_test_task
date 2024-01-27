@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - '8000:8000'
+    volumes:
+      - .:/app
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+  db:
+    image: mysql:8
+    ports:
+      - '3306:3306'
+    env_file:
+      - .env
+    volumes:
+      - mysqldata:/var/lib/mysql
+      - ./resources/db/init_db.sh:/docker-entrypoint-initdb.d/init_db.sh
+    healthcheck:
+      test: ["CMD", "mysql" ,"-e", "SELECT 1", "-u${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
+      timeout: 2s
+      retries: 20
+      interval: 1s
+volumes:
+  mysqldata:
